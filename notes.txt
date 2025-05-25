@@ -1,4 +1,9 @@
-Why did perfomance of last period drop when increasing the sample size?
 What is the neutral period?
 What is our model capturing?(is it factor)
 Can it be genralized?
+
+
+Todo:
+Build regime switching model
+Integrate with main code
+Run ic decay on returns from 2 signals to estimate if regime switching is working correctly 
