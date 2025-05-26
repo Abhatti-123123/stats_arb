@@ -41,3 +41,12 @@ This analysis evaluates three trading strategies using a rolling Johansen cointe
 - **Enhance "neutral" regime modeling**: Currently underperforming, possibly masking additional structure.
 - **Introduce macro filters or volatility-based features** to improve switching accuracy.
 - **Classify market states beyond trace stats** using clustering or causal inference (e.g., PC algorithm, Granger).
+
+Latest results:
+1) using regime of train walk
+2) using regime switch based on macros, option ivs etc (Great results, working on confirming the alpha on bigger dataset and regressing on factors to confirm)
+3) Running a decision tree on a to maximize profits
+![image](https://github.com/user-attachments/assets/30d4b022-5cde-45d6-9e47-d074202c0fae)
+
+
+
