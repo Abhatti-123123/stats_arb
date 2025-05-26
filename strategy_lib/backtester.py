@@ -64,3 +64,47 @@ def backtest_alpha_scaled_basket(df, beta, signal, fee_per_trade=0.001):
         'Avg Hold Days': avg_hold,
         'Data Points': days
     }
+
+
+def backtest_alpha_scaled_basket_soft(df, beta, signal, fee_per_trade=0.001, trade_thresh=0.05):
+    """
+    Handles float-weighted signals with reduced turnover cost overestimation.
+    Uses smoothed signal and penalizes only significant changes.
+    """
+    df = df.copy()
+    basket_ret = df.pct_change().dropna() @ beta
+
+    signal = signal.reindex(df.index).fillna(0)
+    pos = signal.shift(1).reindex(basket_ret.index).fillna(0)
+    strat_ret = pos * basket_ret
+
+    # Penalize only meaningful position change
+    delta = pos.diff().abs().fillna(0)
+    meaningful_change = delta > trade_thresh
+    turnover_cost = meaningful_change.astype(float) * fee_per_trade * np.sum(np.abs(beta))
+    strat_ret -= turnover_cost
+
+    # Core metrics
+    equity = (1 + strat_ret).cumprod()
+    days = len(basket_ret)
+    total = equity.iloc[-1] - 1
+    cagr = equity.iloc[-1]**(252 / days) - 1
+    ann_vol = strat_ret.std(ddof=1) * np.sqrt(252)
+    sharpe = strat_ret.mean() / strat_ret.std() * np.sqrt(252) if strat_ret.std() > 0 else np.nan
+    max_dd = (equity / equity.cummax() - 1).min()
+
+    # Hit rate only on active positions
+    valid = strat_ret[pos != 0]
+    hit_rate = (valid > 0).mean() if not valid.empty else np.nan
+
+    return {
+        'Total Return': total,
+        'CAGR': cagr,
+        'Ann Vol': ann_vol,
+        'Sharpe': sharpe,
+        'Max Drawdown': max_dd,
+        'Trades': int(meaningful_change.sum()),
+        'Hit Rate': hit_rate,
+        'Avg Hold Days': np.nan,
+        'Data Points': days
+    }

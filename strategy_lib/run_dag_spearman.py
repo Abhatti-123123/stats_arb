@@ -25,7 +25,7 @@ df = pd.read_csv(CSV_PATH, parse_dates=['date']).drop(columns=['date'])
 df = engineer_features(df)
 
 #Frome feature analysis
-selected_features = ["Tech df", "PUT_CALL_skew_30", "Tech_IV_diff", "PUT_CALL_skew_20"]
+selected_features = ["IV_slope_10_30", "trace_gap_12", "trace_gap_01", "trace_r1", "SPY_CALL_IV_20", "SPY_PUT_IV_20"]
 dag_df = df[selected_features + ["regime"]]
 
 # Encode regime as integer (required for correlation)
@@ -79,7 +79,39 @@ plt.tight_layout()
 plt.show()
 
 
-# 🧠 Interpretation of the DAG Split:
-# Cluster	Features	Interpretation
-# A	Tech_IV_diff → Tech df → regime	Trend momentum predictors — IV trends drive regime
-# B	PUT_CALL_skew_30 → PUT_CALL_skew_20	Mean-reversion sentiment predictors — risk reversal structure
+# 🔍 Causal DAG Analysis
+# From the diagram, we can infer a clear and intuitive hierarchy of influence:
+
+# 🧠 Causal Layering
+# 🟡 Level 1: Volatility Drivers
+# SPY_CALL_IV_20
+
+# SPY_PUT_IV_20
+
+# These feed into:
+
+# IV_slope_10_30 → capturing the volatility term structure.
+
+# 🟠 Level 2: Structural Indicators
+# IV_slope_10_30
+
+# Influenced by the above.
+
+# Causally connected to trace_gap_01, trace_gap_12, and ultimately regime.
+
+# This forms the macro-volatility feedback loop, i.e. the slope → cointegration structure → regime.
+
+# 🔵 Level 3: Cointegration Dynamics
+# trace_r1, trace_gap_01, trace_gap_12
+# These interact amongst themselves and influence regime directly.
+# This is the cointegration stress signal layer.
+
+# 🔴 Level 4: Target
+# regime
+
+
+# ✅ Key Financial Interpretation:
+# Pathway	Interpretation
+# SPY_IV → IV_slope → trace_gaps → regime	Volatility structure drives regime through cointegration stress.
+# trace_gaps, trace_r1 → regime	Cointegration gap widening → regime shift (mean-revert ↔ trend).
+# IV_slope ↔ trace_gap_01	Term structure slope causally interacts with trace spread tightening or widening.

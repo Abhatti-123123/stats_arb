@@ -23,6 +23,7 @@ def load_options_data(data_path: str, date_filter: set = None) -> pd.DataFrame:
     Optionally filter by QUOTE_DATE if passed.
     """
     all_files = glob.glob(data_path)
+    all_files += glob.glob("data/data2020-23/spy_eod_*.txt")
     dfs = []
 
     for file in all_files:

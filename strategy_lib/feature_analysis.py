@@ -10,28 +10,27 @@ granger_df = run_granger_causality_tests(df, max_lag=3, regime_class="trend")
 print(granger_df)
 
 
-#Output:
-# Lag                      1         2         3
+# Lag                          1         2         3
 # Feature
-# Tech df           0.018078  0.016193  0.046069
-# trace_r2          0.126467  0.283528  0.435865
-# trace_gap_12      0.247719  0.489030  0.674210
-# XLK_SPY_corr      0.268607  0.526999  0.601910
-# trace_r1          0.302017  0.561011  0.739221
-# PUT_CALL_skew_10  0.530386  0.357459  0.573557
-# trace_gap_01      0.535379  0.818383  0.936318
-# PUT_CALL_skew_30  0.536086  0.001518  0.003266
-# trace_r0          0.544945  0.822304  0.936386
-# SPY_PUT_IV_20     0.555894  0.699700  0.385829
-# SPY_CALL_IV_20    0.559419  0.374821  0.295957
-# XLK_return_abs    0.629434  0.695152  0.822556
-# Tech_IV_diff      0.719991  0.006533  0.010268
-# IV_slope_10_30    0.838426  0.813429  0.950273
-# PUT_CALL_skew_20  0.969293  0.001120  0.000886
+# IV_slope_10_30    5.239145e-07  0.000795  0.003057
+# trace_gap_12      7.207967e-04  0.002427  0.005334
+# trace_gap_01      2.358117e-03  0.007555  0.015883
+# trace_r1          8.884855e-03  0.027477  0.056057
+# XLK_return_abs    1.615589e-02  0.158046  0.480700
+# trace_r0          1.926189e-02  0.056937  0.111334
+# SPY_PUT_IV_20     3.318258e-02  0.070503  0.109315
+# SPY_CALL_IV_20    3.394024e-02  0.097966  0.139419
+# PUT_CALL_skew_10  4.919939e-01  0.504114  0.374543
+# PUT_CALL_skew_30  5.384745e-01  0.035631  0.037237
+# XLK_SPY_corr      6.215707e-01  0.526252  0.679628
+# Tech_IV_diff      7.915656e-01  0.919047  0.939504
+# Tech df           8.867255e-01  0.885710  0.814251
+# trace_r2          9.575323e-01  0.996683  0.999702
+# PUT_CALL_skew_20  9.668904e-01  0.727144  0.716415
 
-# Feature	Strong Causality?	Interpretation
-# Tech df	✅ Yes (p < 0.05)	Lagged change in Tech IV predicts regime shift to trend
-# PUT_CALL_skew_30	✅ Yes (Lag 2–3)	Risk reversal (longer-dated) has strong forward predictive power
-# Tech_IV_diff	✅ Yes (Lag 2–3)	Momentum in Tech IV contributes to future regime
-# PUT_CALL_skew_20	✅ Yes (Lag 2–3)	Shorter skew signal, also highly predictive
-# selected_features = ["Tech df", "PUT_CALL_skew_30", "Tech_IV_diff", "PUT_CALL_skew_20"]
+# ✅ Top Predictive Features (p < 0.01 across early lags)
+# Feature	Lag 1	Lag 2	Lag 3	Comments
+# IV_slope_10_30	5e-07	0.0008	0.0031	📈 Very strong — term structure of IV is a regime predictor
+# trace_gap_12	0.0007	0.0024	0.0053	📉 Highly predictive — gap between 2nd and 1st eigenvalues
+# trace_gap_01	0.0023	0.0076	0.0159	📉 Strong — signal of cointegration decay
+# trace_r1	0.0089	0.0275	0.0561	📉 Moderate power — part of trace stats

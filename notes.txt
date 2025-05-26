@@ -7,3 +7,4 @@ Todo:
 Build regime switching model
 Integrate with main code
 Run ic decay on returns from 2 signals to estimate if regime switching is working correctly 
+Layered Feedforward Causal Model 

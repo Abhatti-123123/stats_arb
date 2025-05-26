@@ -15,8 +15,8 @@ TRACE_STATS_FILE = "data/trace_stats_with_regimes.csv"
 FINAL_DATASET_PATH = "data/regime_training_dataset.csv"
 
 # Date range for backtest or model windowing
-START_DATE = "2018-01-01"
-END_DATE   = "2021-12-30"
+START_DATE = "2015-05-27"
+END_DATE   = "2023-12-30"
 
 # Expiry buckets (in days) for options IV extraction
 EXPIRY_BUCKETS = [10, 20, 30]  # used in get_nearest_spy_options
