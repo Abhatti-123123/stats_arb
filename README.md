@@ -49,4 +49,9 @@ Latest results:
 ![image](https://github.com/user-attachments/assets/30d4b022-5cde-45d6-9e47-d074202c0fae)
 
 
+Can't train on past data because tech started having large weightage in spy after 2015.
+This also shows we are arbitraging tech heavy market inefficency in spy.
+
+
+
 
