@@ -28,19 +28,14 @@ This analysis evaluates three trading strategies using a rolling Johansen cointe
 
 ### 🔍 Key Insights
 
-- **Mean-Reverting strategy** had one exceptional year (2020), but failed in most periods.
+- **Mean-Reverting strategy** outperformed in the stationary windows
 - **Trend-Following strategy** offered slightly more consistent behavior, but still underperformed on average.
-- **Regime-Switching strategy** consistently outperformed both, despite slippage — validating the hypothesis that:
+- **Regime-Switching strategy** consistently outperformed both, validating the hypothesis that:
   - Cointegration strength (Trace Statistic) predicts which strategy is appropriate.
   - Regime adaptation with clustering (kmeans) smooths volatility and enhances risk-adjusted returns.
 
 ---
 
-### 💡 Future Work
-
-- **Enhance "neutral" regime modeling**: Currently underperforming, possibly masking additional structure.
-- **Introduce macro filters or volatility-based features** to improve switching accuracy.
-- **Classify market states beyond trace stats** using clustering or causal inference (e.g., PC algorithm, Granger).
 
 Latest results:
 1) using regime of train walk
@@ -50,8 +45,14 @@ Latest results:
 
 
 Can't train on past data because tech started having large weightage in spy after 2015.
-This also shows we are arbitraging tech heavy market inefficency in spy.
+This also shows we are arbitraging tech heavy market inefficency in spy or leakage of tech beta into lower risk indexes like spy.
 
+### 💡 Future Work
+
+I learnt that market don't respect hard bins in walk forward testing. The staionary windows can appearat the end of the testing bin and break out into next period. Giving spurious test results.
+Next work is to develop regime aware back testing framework.
+Also it is important to investigate the reason for this behavior.
+So next step will be regressing returns from trend strategy with tech momentum to check if we are capturing alpha above known factors.
 
 
 
