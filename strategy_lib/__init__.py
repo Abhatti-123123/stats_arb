@@ -3,9 +3,7 @@ from .signals import (
     trend_signal,
     mean_reversion_signal,
     hybrid_signal,
-    blended_regime_signal_bayesian,
     predictive_regime_signal,
-    mean_reversion_signal_zscore
 )
 
 from .regime import (
@@ -31,4 +29,8 @@ from .clustering_based_regime_filtering import (
 
 from .feature_engineering_final import (
     engineer_features
+)
+
+from .model_analysis import (
+    analyze_model
 )

@@ -20,7 +20,7 @@ def engineer_features(df: pd.DataFrame, drop_redundant=True) -> pd.DataFrame:
         df[f"PUT_CALL_skew_{t}"] = df[f"SPY_PUT_IV_{t}"] - df[f"SPY_CALL_IV_{t}"]
 
     # 4. Tech IV Diff (momentum proxy) 
-    df["Tech_IV_diff"] = df["Tech_IV"].diff().fillna(0)
+    # df["Tech_IV_diff"] = df["Tech_IV"].diff().fillna(0)
 
     # 5. XLK return magnitude (vol regime signal)
     df["XLK_return_abs"] = df["XLK_return"].abs()
